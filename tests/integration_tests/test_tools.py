@@ -1,27 +1,107 @@
+# tests/integration_tests/test_payman_tools.py
+
 from typing import Type
 
-from langchain_payman_tool.tools import PaymanAITool
+# Import the standard LangChain test harness for integration testing
 from langchain_tests.integration_tests import ToolsIntegrationTests
 
+# Import your Payman tool classes
+from langchain_payman_tool.tools import (
+    SendPaymentTool,
+    SearchPayeesTool,
+    AddPayeeTool,
+    AskForMoneyTool,
+    GetBalanceTool,
+)
 
-class TestParrotMultiplyToolIntegration(ToolsIntegrationTests):
+
+class TestSendPaymentToolIntegration(ToolsIntegrationTests):
     @property
-    def tool_constructor(self) -> Type[PaymanAITool]:
-        return PaymanAITool
+    def tool_constructor(self) -> Type[SendPaymentTool]:
+        return SendPaymentTool
 
     @property
     def tool_constructor_params(self) -> dict:
-        # if your tool constructor instead required initialization arguments like
-        # `def __init__(self, some_arg: int):`, you would return those here
-        # as a dictionary, e.g.: `return {'some_arg': 42}`
+        # Possibly pass real credentials or environment details here if the constructor needs them
         return {}
 
     @property
     def tool_invoke_params_example(self) -> dict:
-        """
-        Returns a dictionary representing the "args" of an example tool call.
+        return {
+            "amount_decimal": 1.23,
+            "payment_destination_id": "some_real_dest_id",
+            "memo": "Integration test"
+        }
 
-        This should NOT be a ToolCall dict - i.e. it should not
-        have {"name", "id", "args"} keys.
-        """
-        return {"a": 2, "b": 3}
+
+class TestSearchPayeesToolIntegration(ToolsIntegrationTests):
+    @property
+    def tool_constructor(self) -> Type[SearchPayeesTool]:
+        return SearchPayeesTool
+
+    @property
+    def tool_constructor_params(self) -> dict:
+        return {}
+
+    @property
+    def tool_invoke_params_example(self) -> dict:
+        return {
+            "name": "Alice",
+            "contact_email": "alice@example.com"
+            # Possibly real or sandbox data
+        }
+
+
+class TestAddPayeeToolIntegration(ToolsIntegrationTests):
+    @property
+    def tool_constructor(self) -> Type[AddPayeeTool]:
+        return AddPayeeTool
+
+    @property
+    def tool_constructor_params(self) -> dict:
+        return {}
+
+    @property
+    def tool_invoke_params_example(self) -> dict:
+        return {
+            "type": "CRYPTO_ADDRESS",
+            "name": "Integration Crypto Wallet",
+            "address": "0x1234567890abcdef",
+            "currency": "USDC",
+            "tags": ["integration_test"]
+        }
+
+
+class TestAskForMoneyToolIntegration(ToolsIntegrationTests):
+    @property
+    def tool_constructor(self) -> Type[AskForMoneyTool]:
+        return AskForMoneyTool
+
+    @property
+    def tool_constructor_params(self) -> dict:
+        return {}
+
+    @property
+    def tool_invoke_params_example(self) -> dict:
+        return {
+            "amount_decimal": 5.00,
+            "customer_id": "test_customer_integration",
+            "memo": "Integration money request"
+        }
+
+
+class TestGetBalanceToolIntegration(ToolsIntegrationTests):
+    @property
+    def tool_constructor(self) -> Type[GetBalanceTool]:
+        return GetBalanceTool
+
+    @property
+    def tool_constructor_params(self) -> dict:
+        return {}
+
+    @property
+    def tool_invoke_params_example(self) -> dict:
+        return {
+            "customer_id": "test_customer_integration",
+            "currency": "USD"
+        }
