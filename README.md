@@ -9,7 +9,7 @@ This notebook gives a quick overview of integrating PaymanAI into LangChain as a
 
 ## Overview
 
-The PaymanAI integration is part of the `langchain-community` (or your custom) package. It allows you to:
+The PaymanAI integration allows you to:
 
 - Send payments (`send_payment`) to crypto addresses or bank accounts.
 - Search for payees (`search_payees`).
@@ -23,25 +23,19 @@ These can be wrapped as **LangChain Tools** for an LLM-based agent to call them 
 
 | Class    | Package               | Serializable | JS support | Package latest |
 | :------- | :-------------------- | :----------: | :--------: | :------------- |
-| PaymanAI | `langchain_community` |      ❌      |     ❌     | [PyPI Version] |
+| PaymanAI | `langchain-payman-tool` |      ❌      |     ❌     | [PyPI Version] |
 
 If you're simply calling the PaymanAI SDK, you can do it directly or via the **Tool** interface in LangChain.
 
 ## Setup
 
-1. **Install** the `langchain-community` (or equivalent) package:
+1. **Install** the package:
 
 ```bash
-pip install --quiet -U langchain-community
+pip install langchain-payman-tool
 ```
 
-2. **Install** the PaymanAI SDK:
-
-```bash
-pip install paymanai
-```
-
-3. **Set** environment variables:
+2. **Set** environment variables:
 
 ```bash
 export PAYMAN_API_SECRET="YOUR_SECRET_KEY"
@@ -55,7 +49,7 @@ Your `PAYMAN_API_SECRET` should be the secret key from app.paymanai.com. The `PA
 Here is an example of instantiating a PaymanAI tool. If you have multiple Payman methods, you can create multiple tools.
 
 ```python
-from langchain_community.tools.langchain_payman_tool.tool import PaymanAI
+from langchain_payman_tool.tool import PaymanAI
 
 # Instantiate the PaymanAI tool (example)
 tool = PaymanAI(
@@ -105,7 +99,7 @@ You can bind a PaymanAI tool to a LangChain agent or chain that supports tool-ca
 1. **Sign up** at app.paymanai.com to get your **API Key**.
 2. **Install** dependencies:
    ```bash
-   pip install paymanai langchain-community
+   pip install langchain-payman-tool
    ```
 3. **Export** environment variables:
    ```bash
